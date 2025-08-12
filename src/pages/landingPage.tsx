@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronRight, Code, Database, Smartphone, Globe, Github, Linkedin, Mail, Download, ExternalLink, Coffee, Heart, Zap, Users, Award, Target, Briefcase, Star, Rocket, Lightbulb, Brain, Sparkles, Layers, Palette, Smartphone as Mobile, Monitor, Server, Database as DbIcon, GitBranch, Package, Shield, Clock, TrendingUp, MessageCircle, Calendar, FileText, Instagram, Phone, X, Check } from 'lucide-react';
+import { ChevronRight, Code, Github, Linkedin, Mail, Download, ExternalLink, Coffee, Users, Award, Target, Rocket, Lightbulb, Brain, Sparkles, Layers, Smartphone as Mobile, Monitor, Server, GitBranch, TrendingUp, MessageCircle, Calendar, FileText, Instagram, Phone, X, Check } from 'lucide-react';
 import pot_image from '../assets/pot_image.jpg'
 interface Skill {
   name: string;
@@ -45,6 +45,7 @@ const Portfolio: React.FC = () => {
     duration: '30'
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Refs for smooth scrolling
   const homeRef = useRef<HTMLDivElement>(null);
@@ -165,10 +166,13 @@ const Portfolio: React.FC = () => {
     return () => clearInterval(typingInterval);
   }, [currentGreeting]);
 
-  // Scroll event listener to update active section
+  // Scroll event listener to update active section and back to top button
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100; // Offset for better detection
+      
+      // Show/hide back to top button
+      setShowBackToTop(window.scrollY > 500);
       
       // Get all section positions
       const sections = [
@@ -440,9 +444,9 @@ const Portfolio: React.FC = () => {
                    Hello! I'm a
                 </div> */}
                                  <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                   <span className="text-[#00aaa9]">
+                   {/* <span className="text-[#00aaa9]">
                      Hi, I'm Nzayisenga Emmanuel
-                   </span>
+                   </span> */}
                    <br />
                    <span className="text-gray-800">Full-Stack Developer & CS Student</span>
                  </h1>
@@ -1141,6 +1145,19 @@ const Portfolio: React.FC = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Back to Top Button */}
+        {showBackToTop && (
+          <button
+            onClick={() => scrollToSection('home')}
+            className="fixed bottom-8 right-8 bg-[#00aaa9] hover:bg-[#009999] text-white p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 z-40"
+            aria-label="Back to top"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </button>
         )}
      </div>
    );
